@@ -1,0 +1,107 @@
+body {
+    font-family: sans-serif;
+    padding: 2em;
+    line-height: 1.6;
+}
+
+#gachaTypeSelect, #searchButton {
+    padding: 8px;
+    font-size: 16px;
+    margin-top: 0.5em;
+}
+
+#searchButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#fileSelectionArea .status-text {
+    padding: 10px;
+    background-color: #e7f3fe;
+    border: 1px solid #b3d7ff;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.error-container {
+    color: red;
+    margin-top: 0.5em;
+    min-height: 1em;
+}
+
+#io-buttons-container {
+    margin-bottom: 1em;
+}
+#io-buttons-container button {
+    padding: 8px 12px;
+}
+#io-buttons-container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.stats-container {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 1em;
+    min-height: 1em;
+}
+
+
+#resultContainer {
+    margin-top: 1em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.result-header {
+    margin-bottom: 1em;
+}
+
+.filter-container {
+    margin: 1em 0;
+    padding: 1em;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    display: flex;
+    gap: 1.5em;
+}
+.filter-container label {
+    margin-right: 0.5em;
+    font-weight: bold;
+}
+.filter-container select {
+    padding: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th:nth-child(1), td:nth-child(1),
+th:nth-child(3), td:nth-child(3),
+th:nth-child(4), td:nth-child(4) {
+    width: 100px;
+    text-align: center;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 60px;
+    text-align: center;
+}
+
+th {
+    background-color: #e9e9e9;
+}
+
+.rank-3 { color: #007bff; }
+.rank-4 { color: #8a2be2; }
+.rank-5 { color: #ff8c00; }
