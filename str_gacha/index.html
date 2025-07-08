@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>『崩壊：スターレイル』ガチャ履歴分析ツール</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .path-input {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            font-family: monospace;
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>『崩壊：スターレイル』ガチャ履歴分析ツール(Windows PC用)</h1>
+
+    <h2>使い方</h2>
+    <ol>
+        <li>『崩壊：スターレイル』を開き、ゲーム内で確認したいガチャ履歴のページを開いたままにします。</li>
+        <li>
+            エクスプローラーで以下のパスを開きます。<br>
+            <input type="text" class="path-input" value="C:\Program Files\Star Rail\Games\StarRail_Data\webCaches" readonly onclick="this.select();">
+        </li>
+        <li>中に「2.37.1.0」のような数字のフォルダがあるので、更新日時が一番新しいものを開きます。</li>
+        <li>さらに、その中の \Cache\Cache_Data というフォルダを開きます。</li>
+        <li>中にある data_2 ファイルを、デスクトップなど分かりやすい場所にコピーします。</li>
+        <li>下のボタンを押し、コピーしたファイルを選択してください。</li>
+    </ol>
+    <p>
+        一度表示した後、再度このページにアクセスしてもデータは保持されていますが、キャッシュの削除によりデータが失われるためエクスポートを行うことをおすすめします。<br>
+        エクスポートしたデータはインポートすることで、後から再度分析を行うことができます。<br>
+        「2. ガチャ種別を選択」からガチャの種類を選択すると一覧を切り替えることができます<br>
+        data_2は読み込み後一定期間でauthkeyが無効化されます。エラーが出た際は再度使い方の手順を行ってください。
+    </p>
+    <p>
+        ※このツールは、ガチャ履歴の分析を行うためのものです。ゲームのプレイやアカウントに影響を与えるものではありません。<br>
+        ※このツールは、ゲームのアップデートにより動作しなくなる可能性があります。<br>
+        ※このツールは、ゲームのデータを直接操作するもの/個人のデータを収集するものではありません。安全に使用してください。<br>
+        ※このツールは、個人の利用を目的としています。商用利用や再配布は禁止します。
+    </p>
+
+    <hr>
+
+    <h3>1. ファイルを選択</h3>
+    <div id="fileSelectionArea">
+        <input type="file" id="fileInput">
+    </div>
+    <div id="fileErrorContainer" class="error-container"></div>
+
+    <h3>2. ガチャ種別を選択</h3>
+    <select id="gachaTypeSelect">
+        <option value="11">限定キャラ</option>
+        <option value="12">限定武器</option>
+        <option value="1">恒常跳躍</option>
+    </select>
+    
+    <h3>3. 検索開始</h3>
+    <button id="searchButton" disabled>検索開始</button>
+    <div id="searchErrorContainer" class="error-container"></div>
+
+    <hr>
+
+    <h3>検索結果</h3>
+    <div id="io-buttons-container">
+        <button id="importButton">インポート</button>
+        <button id="exportButton" disabled>エクスポート</button>
+    </div>
+    <div id="statsContainer" class="stats-container"></div>
+    
+    <div id="resultContainer">
+        <p>ここに検索結果が表示されます。</p>
+    </div>
+    
+    <input type="file" id="importFileInput" hidden accept="application/json,.json">
+
+    <script src="script.js" defer></script>
+
+</body>
+</html>
