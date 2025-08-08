@@ -46,7 +46,14 @@ body, html {
     flex-grow: 1;
     min-height: 0;
 }
-#square-wrapper:active { cursor: grabbing; }
+#square-wrapper {
+    width: 80%;
+    margin-bottom: 10px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .dragging { opacity: 0.5; }
 .image-preview-square {
     width: 100%;
