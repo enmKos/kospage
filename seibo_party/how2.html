@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星墓編成ツール - 機能紹介</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px 40px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        header {
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin: 0;
+        }
+        h1 span {
+            font-size: 0.5em;
+            color: #7f8c8d;
+            display: block;
+            margin-top: 5px;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #34495e;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            margin-top: 50px;
+        }
+        h3 {
+            font-size: 1.3em;
+            color: #34495e;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+        p {
+            font-size: 1em;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background-color: #ecf0f1;
+            color: #c0392b;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+        .feature-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .feature-box strong {
+            color: #2980b9;
+        }
+        .link-button {
+            display: inline-block;
+            text-align: center;
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .link-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>星墓編成ツール
+                <span>- 機能紹介 -</span>
+            </h1>
+        </header>
+
+        <p>「星墓編成ツール」について</p>
+        <p style="text-align:center; margin-top: 30px;">
+            <a href="index.html" class="link-button">ツールを使ってみる</a>
+        </p>
+
+        <section id="editor">
+            <h2>📝 キャラクター編集エリア（左側）</h2>
+            <p>画面左側のエリアでは、編成するキャラクターの情報を設定します。ここで設定したキャラクターを右側の表へドラッグ＆ドロップしてチームを編成します。</p>
+
+            <div class="feature-box">
+                <h3>🖼️ 画像の設定</h3>
+                <ul>
+                    <li><strong>3つの方法で画像を追加:</strong> 「画像を選択」ボタンでのファイルアップロード、「リンクから取得」ボタンでのURL指定、クリップボードからの直接ペースト（Ctrl+V）に対応しています。</li>
+                    <li><strong>自動トリミング:</strong> 画像を追加すると、中央を基準とした正方形に自動でトリミングされます。</li>
+                    <li><strong>Base64変換:</strong> 追加された画像はすべてテキストデータ（Base64）に変換されます。これにより、オフラインでの利用や、後述するエクスポート機能で画像を含んだデータ保存が可能です。ただし、リンクから取得する場合ほとんどの場合でCORSエラーではじかれます。github pagesの静的サイトの都合によるものなのであしからず。</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>✨ 詳細情報の設定</h3>
+                <ul>
+                    <li><strong>名前:</strong> 名前を自由に入力できます。</li>
+                    <li><strong>役割（メイン/サブ）:</strong> メイン、サブ2、サブ3、サブ4。選択した役割に応じて、画像の枠色が<strong>赤</strong>・<strong>青</strong>・<strong>黄</strong>・<strong>緑</strong>に変化します。サブ垢勢のために。</li>
+                    <li><strong>わくわくの実:</strong> 4つの実をプルダウンから選択できます。一度選択した実は、他のプルダウンの選択肢から除外され、重複を防ぎます。ただし、<code>失神</code>のみ重複して選択可能です。</li>
+                    <li><strong>魂の紋章:</strong> わくわくの実と同様に、4つの紋章を重複しないように選択できます。</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr style="margin: 50px 0; border: none; border-top: 2px solid #eee;">
+
+        <section id="table">
+            <h2>📋 編成テーブル（右側）</h2>
+            <p>画面右側の表は、クエストごとのチーム編成を記録・管理するためのエリアです。</p>
+
+            <div class="feature-box">
+                <h3>🖱️ ドラッグ＆ドロップ操作</h3>
+                <ul>
+                    <li><strong>編成への追加:</strong> 左側で作成したキャラクター(最低でも画像のみ)を、右側の表の「編成」列にあるセルへドラッグ＆ドロップで配置できます。1つのセルに最大4体まで配置可能です。</li>
+                    <li><strong>自動整列:</strong> セルにドロップされたキャラクターは、役割（メイン→サブ2→…）の順番に自動で並び替えられます。</li>
+                    <li><strong>編集エリアへの差し戻し:</strong> 表に配置したキャラクターを左側の編集エリアへドラッグ＆ドロップすると、そのキャラクターの情報を再度編集できます。</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>👀 便利な表示機能</h3>
+                <ul>
+                    <li><strong>クリックでプレビュー:</strong> 表のキャラクターをクリックすると、左側の編集エリアが「プレビューモード」に切り替わります。内容を確認でき、別のキャラクターをクリックすればプレビュー対象も切り替わります。（※編集中はプレビュー不可）</li>
+                    <li><strong>ホバーで情報表示:</strong> 表のキャラクターにマウスカーソルを合わせると、名前・わくわくの実・魂の紋章が小さなウィンドウで表示され、素早く情報を確認できます。</li>
+                    <li><strong>メモ機能:</strong> 「貸しモン」「備考」のセルは直接クリックしてテキストを入力できます。貸しモン情報を簡単に書けます。改行も可能で、内容が溢れた場合はスクロールして確認できます。</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr style="margin: 50px 0; border: none; border-top: 2px solid #eee;">
+
+        <section id="data-management">
+            <h2>💾 データ管理機能</h2>
+            <p>ツールの状態を保存・共有するための機能を備えています。</p>
+
+            <div class="feature-box">
+                <h3>⚙️ 保存と入出力</h3>
+                <ul>
+                    <li><strong>自動保存 (localStorage):</strong> 編集エリアや表の内容はすべて、操作するたびに自動でブラウザに保存されます。次回ページを開いた際には、前回の状態が完全に復元されます。</li>
+                    <li><strong>エクスポート:</strong> 表の左上にある「エクスポート」ボタンを押すと、画像データを含めた全ての編成情報を一つのJSONファイルとしてダウンロードできます。データのバックアップや共有に最適です。</li>
+                    <li><strong>インポート:</strong> 「インポート」ボタンから、エクスポートしたJSONファイルを読み込ませることで、保存した状態をいつでも復元できます。</li>
+                    <li><strong>クリア機能:</strong> 「表をクリア」ボタンで、確認ダイアログの後に表の内容（保存データ含む）を一括でリセットできます。</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
