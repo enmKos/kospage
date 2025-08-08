@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星墓編成ツール</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div id="section-a" class="character-add-section">
+            <div class="content-wrapper">
+                <a href="how2.html">つかいかた</a>
+                <br>
+                <div id="preview-mode-indicator" class="preview-indicator" style="display: none;">
+                    <p>プレビューモード中</p>
+                    <button id="exit-preview-button">編集に戻る</button>
+                </div>
+
+                <select id="role-selector" class="dropdown-menu">
+                    <option value="main">メイン</option>
+                    <option value="sub2">サブ2</option>
+                    <option value="sub3">サブ3</option>
+                    <option value="sub4">サブ4</option>
+                </select>
+
+                <div id="square-wrapper" draggable="true">
+                    <div id="image-preview-square" class="image-preview-square border-main"></div>
+                </div>
+                
+                <div id="edit-buttons-container" class="button-container">
+                    <label for="image-selector" class="action-button">画像を選択</label>
+                    <input type="file" id="image-selector" accept="image/*" style="display: none;">
+                    <button id="get-from-link-button" class="action-button green-button">リンクから取得</button>
+                </div>
+
+                <p class="section-label">名前</p>
+                <input type="text" id="character-name" class="text-input">
+                
+                <p class="section-label">わくわくの実</p>
+                <select class="dropdown-menu ability-selector"></select>
+                <select class="dropdown-menu ability-selector"></select>
+                <select class="dropdown-menu ability-selector"></select>
+                <select class="dropdown-menu ability-selector"></select>
+
+                <p class="section-label">魂の紋章</p>
+                <select class="dropdown-menu crest-selector"></select>
+                <select class="dropdown-menu crest-selector"></select>
+                <select class="dropdown-menu crest-selector"></select>
+                <select class="dropdown-menu crest-selector"></select>
+
+                <button id="reset-all-button" class="reset-button">リセット</button>
+            </div>
+        </div>
+
+        <div id="section-b" class="right-section">
+            <div class="table-container">
+                <div class="table-actions">
+                    <button id="clear-button" class="io-button">表をクリア</button>
+                    <button id="import-button" class="io-button">インポート</button>
+                    <button id="export-button" class="io-button">エクスポート</button>
+                    <input type="file" id="import-file-input" style="display: none;" accept="application/json">
+                </div>
+                <table>
+                    <colgroup>
+                        <col class="label-col">
+                        <col class="data-col">
+                        <col class="data-col">
+                        <col class="data-col">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>編成</th>
+                            <th>貸しモン</th>
+                            <th>備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><th>パライソ</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>黄泉</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>ティルナノーグ</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>アアル</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>アヴァロン</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>シャンバラ</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>アポカリプス</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>アラミタマ</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>ラブ</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>パラノヴィア</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        <tr><th>アムネディア</th><td class="drop-target-cell"><div class="drop-target"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td><td class="editable-cell"><div class="editable-content" contenteditable="true"></div></td></tr>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="tooltip" class="tooltip" style="display: none;">
+        <strong id="tooltip-name"></strong>
+        <div id="tooltip-abilities" class="tooltip-section"></div>
+        <div id="tooltip-crests" class="tooltip-section"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
