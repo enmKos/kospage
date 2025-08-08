@@ -36,18 +36,33 @@ body, html {
     cursor: pointer;
 }
 
-
 #square-wrapper {
-    width: 80%; margin-bottom: 10px; cursor: grab;
-    min-height: 200px; 
-    display: flex; align-items: center; justify-content: center;
+    width: 80%;
+    margin-bottom: 10px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    min-height: 0;
 }
 #square-wrapper:active { cursor: grabbing; }
 .dragging { opacity: 0.5; }
 .image-preview-square {
-    width: 100%; padding-top: 100%; position: relative; background-color: #fff;
-    border-width: 5px; border-style: solid; box-sizing: border-box;
-    border-radius: 2px; overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    background-color: #fff;
+    border-width: 5px;
+    border-style: solid;
+    box-sizing: border-box;
+    border-radius: 2px;
+    overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .image-preview-square img {
     position: absolute; top: 50%; left: 50%;
