@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const roleOrder = ['main', 'sub2', 'sub3', 'sub4'];
     const roleBorderClasses = { main: 'border-main', sub2: 'border-sub2', sub3: 'border-sub3', sub4: 'border-sub4' };
     const defaultOption = '(選択なし)';
-    const abilityOptions = [ defaultOption, '同.撃', '同.命', '同.速', '同.命撃', '同.撃速', '同.速命', '撃.撃', '撃.命', '撃.速', '撃.命撃', '撃.撃速', '撃.速命', '戦.撃', '戦.命', '戦.速', '戦.命撃', '戦.撃速', '戦.速命', '友撃', '即殺', '将命', '兵命', 'ケガ減り', 'ハート', '毒がまん', 'ちび癒し', '失神' ];
+    const abilityOptions = [ defaultOption, '同.撃', '同.命', '同.速', '同.命撃', '同.撃速', '同.速命', '撃.撃', '撃.命', '撃.速', '撃.命撃', '撃.撃速', '撃.速命', '戦.撃', '戦.命', '戦.速', '戦.命撃', '戦.撃速', '戦.速命', '友撃', '速殺', '将命', '兵命', 'ケガ減り', 'ハート', '毒がまん', 'ちび癒し', '失神' ];
     const crestOptions = [ defaultOption, '対火の心得', '対水の心得', '対木の心得', '対光の心得', '対闇の心得', '対弱の心得', '対将の心得', '対兵の心得', '精神力', 'NP耐性', '火柱耐性', '窮地の活路', 'HWマスター', '鎖縛回避', '収檻回避', '不屈の防御', '不屈の闘力', '不屈の速度', '常冷却', '不屈の必殺', '変身回復', '伝染抵抗', 'ゲージ必中', '守護獣の加勢', '運技の発揮', 'HPマスター' ];
     
     let isPreviewMode = false;
@@ -522,4 +522,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     initialize();
+
 });
