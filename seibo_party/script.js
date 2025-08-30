@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tooltipName = document.getElementById('tooltip-name');
     const tooltipAbilities = document.getElementById('tooltip-abilities');
     const tooltipCrests = document.getElementById('tooltip-crests');
+    const refinedButton = document.getElementById('refined-button');
     
     const STORAGE_KEY = 'gameTeamToolData';
     const roleOrder = ['main', 'sub2', 'sub3', 'sub4'];
@@ -602,6 +603,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return filtered;
     }
+
+    refinedButton.addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "application/json";
+        input.onchange = async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            const text = await file.text();
+            const refinedText = text.replace(/\./g, "");
+            const baseName = file.name.replace(/\.json$/i, "");
+            const newFileName = `${baseName}_refined.json`;
+            const blob = new Blob([refinedText], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = newFileName;
+            a.click();
+            URL.revokeObjectURL(url);
+            alert("旧ファイルを修正しました。\nダウンロードしたファイルをインポートしてください。");
+        };
+        input.click();
+    });
+
 
     function initialize() {
         resetEditor();
