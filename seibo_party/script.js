@@ -182,12 +182,21 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.onload = (e) => {
             try {
                 const importedData = JSON.parse(e.target.result);
-                if (Array.isArray(importedData) && importedData[0].team) {
-                    populateTable(importedData);
+                if (importedData && typeof importedData.editor === 'object' && Array.isArray(importedData.table)) {
+                    populateEditor(importedData.editor);
+                    populateTable(importedData.table);
+                    
                     saveStateToLocalStorage();
                     alert("データのインポートに成功しました。");
                 } else {
-                    throw new Error("Invalid file format");
+                    if (Array.isArray(importedData) && importedData.length > 0 && typeof importedData[0].team !== 'undefined') {
+                        resetEditor();
+                        populateTable(importedData);
+                        saveStateToLocalStorage();
+                        alert("（旧形式）データのインポートに成功しました。");
+                    } else {
+                        throw new Error("Invalid file format");
+                    }
                 }
             } catch (error) {
                 alert("ファイルの読み込みに失敗しました。JSON形式が正しくありません。");
