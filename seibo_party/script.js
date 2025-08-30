@@ -1,3 +1,4 @@
+// sortAndFilterSelections(rawAbilities, alignedAbilityOptions)をsortAndFilterSelections(rawAbilities, abilityOptions)に戻せば、選択肢の自動整列を無効化できる
 document.addEventListener('DOMContentLoaded', () => {
     const sectionA = document.getElementById('section-a');
     const previewModeIndicator = document.getElementById('preview-mode-indicator');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const importButton = document.getElementById('import-button');
     const importFileInput = document.getElementById('import-file-input');
     const abilitySelectors = document.querySelectorAll('.ability-selector');
+    const abilityCheckboxes = document.querySelectorAll('.ability-checkbox');
     const crestSelectors = document.querySelectorAll('.crest-selector');
     const characterNameInput = document.getElementById('character-name');
     const tooltip = document.getElementById('tooltip');
@@ -28,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const roleOrder = ['main', 'sub2', 'sub3', 'sub4'];
     const roleBorderClasses = { main: 'border-main', sub2: 'border-sub2', sub3: 'border-sub3', sub4: 'border-sub4' };
     const defaultOption = '(選択なし)';
-    const abilityOptions = [ defaultOption, '同.撃', '同.命', '同.速', '同.命撃', '同.撃速', '同.速命', '撃.撃', '撃.命', '撃.速', '撃.命撃', '撃.撃速', '撃.速命', '戦.撃', '戦.命', '戦.速', '戦.命撃', '戦.撃速', '戦.速命', '友撃', '速殺', '将命', '兵命', 'ケガ減り', 'ハート', '毒がまん', 'ちび癒し', '失神' ];
-    const alignedAbilityOptions = [ defaultOption, '同.撃', '同.命撃', '同.撃速', '撃.撃', '撃.命撃', '撃.撃速', '戦.撃', '戦.命撃', '戦.撃速', '友撃', '速殺', '将命', '兵命', '同.命', '同.速', '同.速命', '撃.命', '撃.速', '撃.速命', '戦.命', '戦.速', '戦.速命', 'ケガ減り', 'ハート', '毒がまん', 'ちび癒し', '失神' ];
+    const abilityOptions = [ defaultOption, '同撃', '同命撃', '同撃速', '撃撃', '撃命撃', '撃撃速', '戦撃', '戦命撃', '戦撃速', '友撃', '速殺', '将命', '兵命', '同命', '同速', '同速命', '撃命', '撃速', '撃速命', '戦命', '戦速', '戦速命', 'ケガ減り', 'ハート', '毒がまん', 'ちび癒し', '失神' ];
+    const alignedAbilityOptions = [ defaultOption, 'ハート', 'ちび癒し', '毒がまん', '速殺', '失心', '兵命', '将命', 'ケガ減り', '友撃', '戦命', '戦速命', '戦速', '撃命', '撃速命', '撃速', '同命', '同速命', '同速', '戦命撃', '戦撃速', '戦撃', '撃命撃', '撃撃速', '撃撃', '同命撃', '同撃速', '同撃'];
     const crestOptions = [ defaultOption, '対火の心得', '対水の心得', '対木の心得', '対光の心得', '対闇の心得', '対弱の心得', '対将の心得', '対兵の心得', '精神力', 'NP耐性', '火柱耐性', '窮地の活路', 'HWマスター', '鎖縛回避', '収檻回避', '不屈の防御', '不屈の闘力', '不屈の速度', '常冷却', '不屈の必殺', '変身回復', '伝染抵抗', 'ゲージ必中', '守護獣の加勢', '運技の発揮', 'HPマスター' ];
     
     let isPreviewMode = false;
@@ -47,7 +49,19 @@ document.addEventListener('DOMContentLoaded', () => {
         resetEditor();
         saveStateToLocalStorage();
     });
-    abilitySelectors.forEach(s => s.addEventListener('change', () => syncDropdowns(abilitySelectors, abilityOptions)));
+    abilitySelectors.forEach((selector, index) => {
+        selector.addEventListener('change', () => {
+            syncDropdowns(abilitySelectors, abilityOptions);
+            const checkbox = abilityCheckboxes[index];
+            if (selector.value !== defaultOption) {
+                checkbox.disabled = false;
+            } else {
+                checkbox.disabled = true;
+                checkbox.checked = false;
+            }
+        });
+    });
+
     crestSelectors.forEach(s => s.addEventListener('change', () => syncDropdowns(crestSelectors, crestOptions)));
     squareWrapper.addEventListener('dragstart', handleDragStartFromEditor);
     squareWrapper.addEventListener('dragend', handleDragEnd);
@@ -71,6 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function saveStateToLocalStorage() {
         const rawAbilities = Array.from(abilitySelectors).map(s => s.value);
+        abilitySelectors.forEach((selector, index) => {
+            rawAbilities.push({
+                name: selector.value,
+                isEL: abilityCheckboxes[index].checked
+            });
+        });
         const rawCrests = Array.from(crestSelectors).map(s => s.value);
 
         const editorData = {
@@ -193,8 +213,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showTooltip(event, data) {
         tooltipName.textContent = data.name || '(名前なし)';
-        const abilitiesHtml = data.abilities.filter(v => v !== defaultOption)
-            .map(v => `<li>${v}</li>`).join('');
+        const abilitiesHtml = data.abilities
+            .filter(v => (v.name || v) !== defaultOption)
+            .map(v => {
+                // 新旧データ形式に対応
+                const name = typeof v === 'object' ? v.name : v;
+                const isEL = typeof v === 'object' ? v.isEL : false;
+                return `<li>${name}${isEL ? ' (EL)' : ''}</li>`;
+            }).join('');
         const crestsHtml = data.crests.filter(v => v !== defaultOption)
             .map(v => `<li>${v}</li>`).join('');
 
@@ -355,7 +381,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const imageData = bgImage.slice(5, -2);
 
-        const rawAbilities = Array.from(abilitySelectors).map(s => s.value);
+        const rawAbilities = [];
+        abilitySelectors.forEach((selector, index) => {
+            rawAbilities.push({
+                name: selector.value,
+                isEL: abilityCheckboxes[index].checked
+            });
+        });
         const rawCrests = Array.from(crestSelectors).map(s => s.value);
 
         const characterData = {
@@ -476,6 +508,10 @@ document.addEventListener('DOMContentLoaded', () => {
         handleRoleChange();
         initDropdowns(abilitySelectors, abilityOptions);
         initDropdowns(crestSelectors, crestOptions);
+        abilityCheckboxes.forEach(cb => {
+            cb.checked = false;
+            cb.disabled = true;
+        });
     }
 
     function handleClearTable() {
@@ -505,9 +541,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function populateDropdowns(selectors, values) {
         if (!values) return;
-        selectors.forEach((selector, index) => {
-            selector.value = values[index] || defaultOption;
-        });
+        // わくわくの実
+        if (selectors === abilitySelectors) {
+            selectors.forEach((selector, index) => {
+                const data = values[index];
+                if (data) {
+                    // 新旧データ形式に対応
+                    const abilityName = typeof data === 'object' ? data.name : data;
+                    const isEL = typeof data === 'object' ? (data.isEL || false) : false;
+                    selector.value = abilityName;
+                    abilityCheckboxes[index].checked = isEL;
+                    
+                    if (abilityName !== defaultOption) {
+                        abilityCheckboxes[index].disabled = false;
+                    } else {
+                        abilityCheckboxes[index].disabled = true;
+                    }
+                } else {
+                    selector.value = defaultOption;
+                    abilityCheckboxes[index].checked = false;
+                    abilityCheckboxes[index].disabled = true;
+                }
+            });
+        } 
+        // 魂の紋章
+        else if (selectors === crestSelectors) {
+            selectors.forEach((selector, index) => {
+                selector.value = values[index] || defaultOption;
+            });
+        }
     }
     function syncDropdowns(selectors, options) {
         const selectedValues = Array.from(selectors).map(s => s.value).filter(v => v !== defaultOption && v !== '失神');;
@@ -523,8 +585,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     function sortAndFilterSelections(selections, masterList) {
-        const filtered = selections.filter(s => s !== defaultOption);
-        filtered.sort((a, b) => masterList.indexOf(a) - masterList.indexOf(b));
+        const filtered = selections.filter(s => (s.name || s) !== defaultOption);
+        filtered.sort((a, b) => {
+            const nameA = a.name || a;
+            const nameB = b.name || b;
+            return masterList.indexOf(nameA) - masterList.indexOf(nameB);
+        });
         return filtered;
     }
 
