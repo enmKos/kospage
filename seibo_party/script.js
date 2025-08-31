@@ -612,7 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const file = event.target.files[0];
             if (!file) return;
             const text = await file.text();
-            const refinedText = text.replace(/\./g, "");
+            const refinedText = text.replace(/\./g, "").replace(/即/g, "速");
             const baseName = file.name.replace(/\.json$/i, "");
             const newFileName = `${baseName}_refined.json`;
             const blob = new Blob([refinedText], { type: "application/json" });
@@ -635,3 +635,4 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initialize();
 });
+
